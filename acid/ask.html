@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Write the brief. Reclaimed &amp; Stained</title>
+  <meta name="description" content="Write a brief to leave wood with Reclaimed &amp; Stained or to ask for wood.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&family=Literata:opsz,wght@7..72,400;7..72,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="sub">
+  <a class="skip" href="#content">Skip to content</a>
+  <div class="frame">
+    <header class="rail">
+      <button type="button" class="can-toggle" data-cans-toggle aria-expanded="false" aria-controls="stain-labels">Stain labels</button>
+      <nav id="stain-labels" class="cans" data-cans data-open="false" aria-label="Stain labels">
+        <a class="can can-home" href="index.html">
+          <span class="can-band">Reclaimed &amp; Stained</span>
+          <span class="can-name">Home</span>
+          <span class="can-use">The yard</span>
+        </a>
+        <a class="can can-intake" href="intake.html">
+          <span class="can-band">Reclaimed &amp; Stained</span>
+          <span class="can-name">Intake</span>
+          <span class="can-use">Leave wood</span>
+        </a>
+        <a class="can can-uses" href="uses.html">
+          <span class="can-band">Reclaimed &amp; Stained</span>
+          <span class="can-name">Uses</span>
+          <span class="can-use">Name the job</span>
+        </a>
+        <a class="can can-ask" href="ask.html" aria-current="page">
+          <span class="can-band">Reclaimed &amp; Stained</span>
+          <span class="can-name">Ask</span>
+          <span class="can-use">Write the brief</span>
+        </a>
+      </nav>
+    </header>
+    <main id="content" tabindex="-1">
+      <article class="sheet sheet-ask">
+        <h1>Write the brief.</h1>
+        <p class="lede">You give your name, you choose leave or ask, you describe the wood, and you give the timing.</p>
+        <p class="lede">If you leave wood, IRS listings say contributions are deductible. Ask your own tax person about your return.</p>
+        <form data-brief-form action="ask.html" method="get">
+          <div class="field">
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" autocomplete="name" required>
+          </div>
+          <fieldset>
+            <legend>Leave or ask</legend>
+            <label class="choice">
+              <input type="radio" name="leave-or-ask" value="Leave wood" required>
+              Leave wood
+            </label>
+            <label class="choice">
+              <input type="radio" name="leave-or-ask" value="Ask for wood">
+              Ask for wood
+            </label>
+          </fieldset>
+          <div class="field">
+            <label for="have-or-need">What you have or need</label>
+            <textarea id="have-or-need" name="have-or-need" required></textarea>
+          </div>
+          <div class="field">
+            <label for="timing">Timing</label>
+            <input id="timing" name="timing" type="text" required>
+          </div>
+          <button type="submit">Copy the brief</button>
+        </form>
+        <p class="mail-note" data-mail-note>The mailbox on this page is empty. You copy the brief and keep it. Nothing is sent.</p>
+        <noscript>
+          <p class="mail-note">This page needs the site script to copy the brief. Write the same four facts down and keep them.</p>
+        </noscript>
+        <p class="form-status" data-form-status role="status"></p>
+        <div id="brief" class="brief" data-brief tabindex="-1" hidden>
+          <h2>Your brief</h2>
+          <pre data-brief-text></pre>
+          <p data-mail-slot></p>
+        </div>
+      </article>
+    </main>
+  </div>
+  <footer class="colophon">
+    <ul class="colophon-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="intake.html">Intake</a></li>
+      <li><a href="uses.html">Uses</a></li>
+      <li><a href="ask.html">Ask</a></li>
+    </ul>
+    <p class="colophon-name">Reclaimed &amp; Stained</p>
+    <p>501(c)(3) in Milwaukie, Oregon. EIN 42-2181182.</p>
+    <p>IRS listings say contributions are deductible. Ask your own tax person about your return.</p>
+    <p>A builder confirms the piece fits the job.</p>
+  </footer>
+  <script src="site.js"></script>
+</body>
+</html>

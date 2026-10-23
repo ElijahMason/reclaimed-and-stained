@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RS-02 Sort, Reclaimed &amp; Stained</title>
+  <meta name="description" content="The sort sheet names categories for donated reclaimed wood. Amounts and counts stay off this sheet.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="site.css">
+  <script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+  <a class="skip" href="#sheet">Skip to sheet</a>
+  <div class="frame">
+    <header class="rail">
+      <p class="org">Reclaimed &amp; Stained</p>
+      <p class="org-line">501(c)(3) in Milwaukie, Oregon</p>
+      <p class="org-line">EIN 42-2181182</p>
+      <p class="pencil">The board already served. Put it back to work.</p>
+      <button type="button" class="index-toggle" data-sheet-toggle aria-expanded="false" aria-controls="sheet-index">Open sheet index</button>
+      <nav id="sheet-index" class="sheet-index" aria-label="Sheet index" data-sheet-index>
+        <table>
+          <caption>Sheet index</caption>
+          <thead>
+            <tr>
+              <th scope="col">Mark</th>
+              <th scope="col">Sheet</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">RS-01</th>
+              <td><a href="index.html">Intake</a></td>
+            </tr>
+            <tr class="here">
+              <th scope="row">RS-02</th>
+              <td><a href="sort.html" aria-current="page">Sort</a></td>
+            </tr>
+            <tr>
+              <th scope="row">RS-03</th>
+              <td><a href="request.html">Request</a></td>
+            </tr>
+            <tr>
+              <th scope="row">RS-04</th>
+              <td><a href="note.html">Note</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </nav>
+    </header>
+    <main>
+      <article class="sheet" id="sheet" tabindex="-1">
+        <p class="sheet-mark">RS-02</p>
+        <h1>Sort</h1>
+        <p>The shop sorts donated reclaimed wood so you can match a piece to a job. This sheet names the categories. It does not count pieces.</p>
+        <h2>What the columns name</h2>
+        <dl class="key">
+          <dt>what came in</dt>
+          <dd>The kind of reclaimed wood.</dd>
+          <dt>nails</dt>
+          <dd>Fasteners that came with the wood.</dd>
+          <dt>fit</dt>
+          <dd>How the piece sits. Fit is not a structural grade. A builder confirms the piece.</dd>
+          <dt>where it can go</dt>
+          <dd>Construction, a patio, decking, or similar building.</dd>
+        </dl>
+        <p>Amounts and counts stay off this sheet. Blank lines mean the week is not filled with fake numbers.</p>
+        <table class="entry">
+          <caption>Category columns for this sheet.</caption>
+          <thead>
+            <tr>
+              <th scope="col">what came in</th>
+              <th scope="col">nails</th>
+              <th scope="col">fit</th>
+              <th scope="col">where it can go</th>
+            </tr>
+          </thead>
+          <tbody aria-hidden="true">
+            <tr><td></td><td></td><td></td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td></tr>
+          </tbody>
+        </table>
+        <p class="jump"><a href="request.html">Open RS-03, the request sheet</a></p>
+        <p class="tax">Contributions are listed as deductible. Ask your own tax person about your return.</p>
+        <footer class="sheet-foot">
+          <p>Reclaimed &amp; Stained. EIN 42-2181182. Milwaukie, Oregon. RS-02 Sort.</p>
+        </footer>
+      </article>
+    </main>
+  </div>
+  <script src="site.js" defer></script>
+</body>
+</html>

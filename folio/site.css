@@ -1,0 +1,496 @@
+/* Rule pitch is 32px. Body copy sits in the bands. The red ticks stay in the binding margin. */
+
+:root {
+  --paper: #f3efe4;
+  --ink: #1c1915;
+  --pencil: #a32020;
+  --rule: rgba(28, 25, 21, 0.4);
+  --serif: "Newsreader", "Iowan Old Style", Palatino, "Palatino Linotype", Georgia, serif;
+  --mono: "IBM Plex Mono", "Nimbus Mono PS", ui-monospace, monospace;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  color-scheme: light;
+  scroll-behavior: auto;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background-color: var(--paper);
+  font-family: var(--serif);
+  font-size: 1.125rem;
+  line-height: 1.5;
+  overflow-wrap: break-word;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  z-index: 0;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 1.25rem;
+  pointer-events: none;
+  border-right: 2px solid var(--pencil);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0 31px,
+    var(--pencil) 31px 32px
+  );
+}
+
+.frame {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 68rem);
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem 2rem;
+}
+
+.skip {
+  position: absolute;
+  left: 2rem;
+  top: 0.5rem;
+  z-index: 5;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0.5rem 0.75rem;
+  background: var(--paper);
+  color: var(--ink);
+  border: 1px solid var(--ink);
+  text-decoration: none;
+}
+
+.skip:not(:focus) {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  width: 1px;
+  height: 1px;
+  min-height: 0;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  white-space: nowrap;
+  border: 0;
+  pointer-events: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--pencil);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: var(--pencil);
+  color: var(--paper);
+}
+
+a:link,
+a:visited {
+  color: var(--ink);
+}
+
+a:hover,
+a:focus-visible {
+  color: var(--pencil);
+}
+
+.org {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 1.375rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.org-line,
+.sheet-mark,
+.index-toggle,
+.sheet-index th,
+.sheet-index caption,
+.entry th,
+.entry caption,
+.field label,
+legend,
+.req,
+.status,
+.brief pre,
+.sheet-foot p,
+button {
+  font-family: var(--mono);
+}
+
+.org-line {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.pencil {
+  margin: 1.25rem 0 1.25rem;
+  padding-left: 0.75rem;
+  border-left: 2px solid var(--pencil);
+  color: var(--pencil);
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.05rem;
+  line-height: 1.45;
+}
+
+.index-toggle {
+  display: none;
+  width: 100%;
+  margin: 0 0 0.75rem;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.sheet-index table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.sheet-index caption {
+  caption-side: top;
+  text-align: left;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  padding: 0 0 0.35rem;
+}
+
+.sheet-index th,
+.sheet-index td {
+  text-align: left;
+  vertical-align: middle;
+  font-weight: 500;
+  padding: 0;
+}
+
+.sheet-index thead th {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  border-bottom: 1px solid var(--ink);
+  padding: 0 0.5rem 0.35rem 0;
+}
+
+.sheet-index tbody th {
+  width: 5.25rem;
+  padding-right: 0.75rem;
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+.sheet-index a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  text-underline-offset: 0.18em;
+}
+
+.sheet-index tr.here th {
+  box-shadow: inset 3px 0 0 var(--pencil);
+}
+
+.sheet-mark {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+h1,
+h2 {
+  font-family: var(--serif);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+h1 {
+  margin: 0 0 0.75rem;
+  font-size: 2rem;
+}
+
+h2 {
+  margin: 1.25rem 0 0.35rem;
+  font-size: 1.35rem;
+}
+
+.sheet p,
+.key dd {
+  margin: 0 0 0.75rem;
+  max-width: 38rem;
+}
+
+.sheet {
+  min-width: 0;
+}
+
+.jump {
+  margin: 0.25rem 0 1rem;
+}
+
+.jump a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  text-underline-offset: 0.18em;
+}
+
+.key {
+  margin: 0 0 1rem;
+}
+
+.key dt {
+  margin: 0;
+  padding-top: 0.45rem;
+  border-top: 1px solid var(--rule);
+  font-family: var(--mono);
+  font-size: 0.9375rem;
+  line-height: 1.45;
+}
+
+.key dd {
+  margin: 0 0 0.65rem;
+}
+
+.entry {
+  width: 100%;
+  max-width: 100%;
+  margin: 0.5rem 0 0.75rem;
+  border-collapse: collapse;
+  table-layout: fixed;
+  background: var(--paper);
+}
+
+.entry caption {
+  caption-side: bottom;
+  text-align: left;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  padding-top: 0.5rem;
+}
+
+.entry th,
+.entry td {
+  border-left: 1px solid var(--rule);
+  vertical-align: bottom;
+}
+
+.entry th:first-child,
+.entry td:first-child {
+  border-left: 0;
+}
+
+.entry th {
+  padding: 0.4rem 0.35rem 0.45rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.25;
+  text-align: left;
+  overflow-wrap: break-word;
+  border-bottom: 1px solid var(--ink);
+}
+
+.entry td {
+  height: 2.5rem;
+  padding: 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.tax {
+  margin-top: 1.25rem;
+}
+
+.sheet-foot {
+  margin-top: 1.5rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--ink);
+}
+
+.sheet-foot p {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+  line-height: 1.45;
+}
+
+.brief-form {
+  margin: 0.5rem 0 0;
+  max-width: 36rem;
+}
+
+fieldset {
+  border: 0;
+  margin: 0.75rem 0;
+  padding: 0;
+  min-width: 0;
+}
+
+legend,
+.field label {
+  display: block;
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.req {
+  color: var(--pencil);
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.help {
+  margin: 0 0 0.25rem;
+  font-family: var(--serif);
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.choice {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 44px;
+  font-family: var(--serif);
+  font-size: 1.125rem;
+}
+
+.choice input {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin: 0;
+  accent-color: var(--pencil);
+}
+
+input[type="text"],
+textarea {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 0 0.85rem;
+  padding: 0.45rem 0.15rem;
+  min-height: 44px;
+  border: 0;
+  border-bottom: 1px solid var(--ink);
+  border-radius: 0;
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+textarea {
+  min-height: 8rem;
+  resize: vertical;
+}
+
+button {
+  min-height: 44px;
+  padding: 0.55rem 0.9rem;
+  border: 1px solid var(--ink);
+  border-radius: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1.3;
+}
+
+button:hover,
+button:focus-visible {
+  color: var(--pencil);
+  border-color: var(--pencil);
+}
+
+.brief-form button {
+  width: 100%;
+  margin-top: 0.35rem;
+}
+
+.status {
+  margin: 0.9rem 0 0;
+  max-width: 38rem;
+  font-size: 0.875rem;
+  line-height: 1.45;
+}
+
+.status:empty {
+  margin: 0;
+}
+
+.brief {
+  margin-top: 1.25rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--ink);
+  max-width: 38rem;
+}
+
+.brief pre {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+@media (min-width: 40rem) {
+  .brief-form button {
+    width: auto;
+  }
+}
+
+@media (max-width: 51.99rem) {
+  .js .index-toggle {
+    display: inline-flex;
+  }
+
+  .js .sheet-index:not(.is-open) {
+    display: none;
+  }
+}
+
+@media (min-width: 52rem) {
+  .frame {
+    display: grid;
+    grid-template-columns: 16rem minmax(0, 1fr);
+    column-gap: 2.5rem;
+    align-items: start;
+    padding: 2rem 2rem 4rem 2.5rem;
+  }
+
+  .rail {
+    position: sticky;
+    top: 0;
+  }
+
+  .index-toggle {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

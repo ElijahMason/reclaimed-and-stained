@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RS-04 Note, Reclaimed &amp; Stained</title>
+  <meta name="description" content="Write a brief for Reclaimed &amp; Stained. The form copies it onto this sheet. The email line is empty, so the page does not send it.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="site.css">
+  <script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+  <a class="skip" href="#sheet">Skip to sheet</a>
+  <div class="frame">
+    <header class="rail">
+      <p class="org">Reclaimed &amp; Stained</p>
+      <p class="org-line">501(c)(3) in Milwaukie, Oregon</p>
+      <p class="org-line">EIN 42-2181182</p>
+      <p class="pencil">The board already served. Put it back to work.</p>
+      <button type="button" class="index-toggle" data-sheet-toggle aria-expanded="false" aria-controls="sheet-index">Open sheet index</button>
+      <nav id="sheet-index" class="sheet-index" aria-label="Sheet index" data-sheet-index>
+        <table>
+          <caption>Sheet index</caption>
+          <thead>
+            <tr>
+              <th scope="col">Mark</th>
+              <th scope="col">Sheet</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">RS-01</th>
+              <td><a href="index.html">Intake</a></td>
+            </tr>
+            <tr>
+              <th scope="row">RS-02</th>
+              <td><a href="sort.html">Sort</a></td>
+            </tr>
+            <tr>
+              <th scope="row">RS-03</th>
+              <td><a href="request.html">Request</a></td>
+            </tr>
+            <tr class="here">
+              <th scope="row">RS-04</th>
+              <td><a href="note.html" aria-current="page">Note</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </nav>
+    </header>
+    <main>
+      <article class="sheet" id="sheet" tabindex="-1">
+        <p class="sheet-mark">RS-04</p>
+        <h1>Note</h1>
+        <p>You write a brief here. The form copies your name, leave or ask, a description, and timing, then shows that brief on this sheet.</p>
+        <p>The email line is empty. This page does not send the brief. Amounts and counts stay off this sheet.</p>
+        <noscript>
+          <p>This sheet uses the page script to copy the brief. The email line is empty, so the page still does not send mail.</p>
+        </noscript>
+        <form class="brief-form" data-brief-form action="note.html" method="get">
+          <div class="field">
+            <label for="name">Name <span class="req">Required</span></label>
+            <input id="name" name="name" type="text" autocomplete="name" required maxlength="120">
+          </div>
+          <fieldset>
+            <legend>Leave or ask <span class="req">Required</span></legend>
+            <label class="choice" for="intent-leave">
+              <input id="intent-leave" type="radio" name="intent" value="Leave wood" required>
+              <span>Leave wood</span>
+            </label>
+            <label class="choice" for="intent-ask">
+              <input id="intent-ask" type="radio" name="intent" value="Ask for wood">
+              <span>Ask for wood</span>
+            </label>
+          </fieldset>
+          <div class="field">
+            <label for="description">Description <span class="req">Required</span></label>
+            <p class="help" id="description-help">What you are leaving, or what you want the wood for.</p>
+            <textarea id="description" name="description" required maxlength="2000" rows="4" aria-describedby="description-help"></textarea>
+          </div>
+          <div class="field">
+            <label for="timing">Timing <span class="req">Required</span></label>
+            <p class="help" id="timing-help">When you can leave wood, or when you hope to pick it up. The shop does not promise that time.</p>
+            <input id="timing" name="timing" type="text" required maxlength="200" autocomplete="off" aria-describedby="timing-help">
+          </div>
+          <button type="submit">Copy the brief onto this sheet</button>
+        </form>
+        <p id="brief-status" class="status" role="status"></p>
+        <section class="brief" id="brief-out" aria-labelledby="brief-heading">
+          <h2 id="brief-heading" tabindex="-1">Brief</h2>
+          <pre id="brief-text">No brief yet.</pre>
+        </section>
+        <p class="jump"><a href="request.html">Open RS-03, the request sheet</a></p>
+        <p class="tax">Contributions are listed as deductible. Ask your own tax person about your return.</p>
+        <footer class="sheet-foot">
+          <p>Reclaimed &amp; Stained. EIN 42-2181182. Milwaukie, Oregon. RS-04 Note.</p>
+        </footer>
+      </article>
+    </main>
+  </div>
+  <script src="site.js" defer></script>
+</body>
+</html>
