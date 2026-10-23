@@ -87,7 +87,6 @@ const CONTACT_EMAIL = "";
     var brief = [
       "Reclaimed & Stained",
       "Milwaukie, Oregon",
-      "EIN 42-2181182",
       "",
       "Name: " + name,
       "Leave or ask: " + intent,
