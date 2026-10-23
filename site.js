@@ -1,237 +1,158 @@
+// Empty until a real mailbox is set. No mailto link while this stays empty.
 const CONTACT_EMAIL = "";
 
-function copyBrief(text) {
-  if (!navigator.clipboard || !window.isSecureContext) return Promise.resolve(false);
-  return new Promise(function (resolve) {
-    let settled = false;
-    const timer = setTimeout(function () {
-      if (!settled) resolve(false);
-    }, 700);
-    navigator.clipboard.writeText(text).then(function () {
-      settled = true;
-      clearTimeout(timer);
-      resolve(true);
-    }).catch(function () {
-      settled = true;
-      clearTimeout(timer);
-      resolve(false);
+(function () {
+  var toggle = document.querySelector("[data-cans-toggle]");
+  var cans = document.querySelector("[data-cans]");
+
+  function mobileNav() {
+    return toggle && getComputedStyle(toggle).display !== "none";
+  }
+
+  function setOpen(open) {
+    if (!toggle || !cans) return;
+    cans.setAttribute("data-open", open ? "true" : "false");
+    toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    toggle.textContent = open ? "Close labels" : "Stain labels";
+  }
+
+  if (toggle && cans) {
+    toggle.addEventListener("click", function () {
+      var willOpen = toggle.getAttribute("aria-expanded") !== "true";
+      setOpen(willOpen);
+      if (willOpen) {
+        var first = cans.querySelector("a");
+        if (first) first.focus();
+      }
     });
-  });
-}
 
-function mailHref(email, purpose, brief) {
-  const clean = String(email || "").trim();
-  if (!/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(clean)) {
-    return "";
-  }
-  const subject = "Reclaimed & Stained brief: " + purpose;
-  return (
-    "mailto:" +
-    clean +
-    "?subject=" +
-    encodeURIComponent(subject) +
-    "&body=" +
-    encodeURIComponent(brief)
-  );
-}
+    document.addEventListener("keydown", function (event) {
+      if (event.key !== "Escape") return;
+      if (!mobileNav()) return;
+      if (toggle.getAttribute("aria-expanded") !== "true") return;
+      setOpen(false);
+      toggle.focus();
+    });
 
-function initNav() {
-  const toggle = document.querySelector("[data-nav-toggle]");
-  const rail = document.querySelector("[data-rail]");
-  const backdrop = document.querySelector("[data-nav-backdrop]");
-  const main = document.getElementById("content");
-  if (!toggle || !rail || !backdrop) return false;
-
-  const drawer = window.matchMedia("(max-width: 760px)");
-
-  function openDrawer() {
-    rail.classList.add("is-open");
-    toggle.setAttribute("aria-expanded", "true");
-    toggle.textContent = "Close";
-    backdrop.hidden = false;
-    document.body.classList.add("nav-open");
-    rail.removeAttribute("inert");
-    if (main) main.setAttribute("inert", "");
-    const first = rail.querySelector("a");
-    if (first) first.focus({ preventScroll: true });
+    cans.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("click", function () {
+        if (mobileNav()) setOpen(false);
+      });
+    });
   }
 
-  function closeDrawer(returnFocus) {
-    rail.classList.remove("is-open");
-    toggle.setAttribute("aria-expanded", "false");
-    toggle.textContent = "Index";
-    backdrop.hidden = true;
-    document.body.classList.remove("nav-open");
-    if (drawer.matches) rail.setAttribute("inert", "");
-    else rail.removeAttribute("inert");
-    if (main) main.removeAttribute("inert");
-    if (returnFocus) toggle.focus({ preventScroll: true });
+  var note = document.querySelector("[data-mail-note]");
+  if (note && CONTACT_EMAIL) {
+    note.textContent = "You can open a message after you copy the brief.";
   }
 
-  function syncMode() {
-    if (!drawer.matches) {
-      rail.classList.remove("is-open");
-      toggle.setAttribute("aria-expanded", "false");
-      toggle.textContent = "Index";
-      backdrop.hidden = true;
-      document.body.classList.remove("nav-open");
-      rail.removeAttribute("inert");
-      if (main) main.removeAttribute("inert");
-      return;
-    }
-    if (!rail.classList.contains("is-open")) {
-      rail.setAttribute("inert", "");
-      backdrop.hidden = true;
-      if (main) main.removeAttribute("inert");
-    }
-  }
-
-  syncMode();
-
-  toggle.addEventListener("click", function () {
-    if (rail.classList.contains("is-open")) closeDrawer(true);
-    else openDrawer();
-  });
-
-  backdrop.addEventListener("click", function () {
-    closeDrawer(true);
-  });
-
-  document.addEventListener("keydown", function (event) {
-    if (!drawer.matches || !rail.classList.contains("is-open")) return;
-    if (event.key === "Escape") {
-      event.preventDefault();
-      closeDrawer(true);
-      return;
-    }
-    if (event.key !== "Tab") return;
-    const nodes = [toggle].concat(Array.prototype.slice.call(rail.querySelectorAll("a")));
-    const first = nodes[0];
-    const last = nodes[nodes.length - 1];
-    if (event.shiftKey && document.activeElement === first) {
-      event.preventDefault();
-      last.focus();
-    } else if (!event.shiftKey && document.activeElement === last) {
-      event.preventDefault();
-      first.focus();
-    }
-  });
-
-  if (drawer.addEventListener) {
-    drawer.addEventListener("change", syncMode);
-  }
-
-  return true;
-}
-
-function initForm() {
-  const form = document.querySelector("[data-brief-form]");
+  var form = document.querySelector("[data-brief-form]");
   if (!form) return;
 
-  const result = document.querySelector("[data-brief-result]");
-  const status = document.querySelector("[data-brief-status]");
-  const output = document.querySelector("[data-brief-output]");
-  const mail = document.querySelector("[data-brief-mail]");
-  const heading = document.getElementById("brief-heading");
+  var output = document.querySelector("[data-brief]");
+  var briefText = document.querySelector("[data-brief-text]");
+  var status = document.querySelector("[data-form-status]");
+  var mailSlot = document.querySelector("[data-mail-slot]");
 
-  function clearField(name) {
-    const slot = form.querySelector('[data-error="' + name + '"]');
-    if (slot) slot.textContent = "";
-    const fields = form.querySelectorAll('[name="' + name + '"]');
-    Array.prototype.forEach.call(fields, function (node) {
-      node.removeAttribute("aria-invalid");
-    });
-  }
-
-  function setError(name, message) {
-    const slot = form.querySelector('[data-error="' + name + '"]');
-    if (slot) slot.textContent = message;
-    const fields = form.querySelectorAll('[name="' + name + '"]');
-    Array.prototype.forEach.call(fields, function (node) {
-      node.setAttribute("aria-invalid", "true");
-    });
-  }
-
-  form.addEventListener("input", function (event) {
-    if (event.target && event.target.name) clearField(event.target.name);
-  });
-
-  form.addEventListener("submit", async function (event) {
+  form.addEventListener("submit", function (event) {
     event.preventDefault();
-    ["name", "purpose", "detail", "timing"].forEach(clearField);
-    const data = new FormData(form);
-    const name = String(data.get("name") || "").trim();
-    const purpose = String(data.get("purpose") || "").trim();
-    const detail = String(data.get("detail") || "").trim();
-    const timing = String(data.get("timing") || "").trim();
-    if (!name) setError("name", "Enter your name.");
-    if (!purpose) setError("purpose", "Choose leave wood or ask for wood.");
-    if (!detail) setError("detail", "Say what you have or need.");
-    if (!timing) setError("timing", "Say the timing.");
-    const bad = form.querySelector("[aria-invalid='true']");
-    if (bad) {
-      bad.focus();
+    var data = new FormData(form);
+    var name = String(data.get("name") || "").trim();
+    var intent = String(data.get("leave-or-ask") || "").trim();
+    var detail = String(data.get("have-or-need") || "").trim();
+    var timing = String(data.get("timing") || "").trim();
+
+    if (!name) {
+      say("Add your name, then copy the brief.");
+      form.querySelector("#name").focus();
+      return;
+    }
+    if (!intent) {
+      say("Choose leave or ask, then copy the brief.");
+      var radio = form.querySelector('input[name="leave-or-ask"]');
+      if (radio) radio.focus();
+      return;
+    }
+    if (!detail) {
+      say("Describe what you have or need, then copy the brief.");
+      form.querySelector("#have-or-need").focus();
+      return;
+    }
+    if (!timing) {
+      say("Add the timing, then copy the brief.");
+      form.querySelector("#timing").focus();
       return;
     }
 
-    const brief = [
+    var brief = [
       "Reclaimed & Stained",
+      "Milwaukie, Oregon",
+      "EIN 42-2181182",
+      "",
       "Name: " + name,
-      "Purpose: " + purpose,
-      "What I have or need: " + detail,
+      "Leave or ask: " + intent,
+      "What you have or need: " + detail,
       "Timing: " + timing
     ].join("\n");
 
-    output.value = brief;
-    result.hidden = false;
-    while (mail.firstChild) mail.removeChild(mail.firstChild);
-    const href = mailHref(CONTACT_EMAIL, purpose, brief);
-    if (href) {
-      const link = document.createElement("a");
-      link.className = "button";
-      link.href = href;
-      link.textContent = "Open this brief in your mail program";
-      mail.appendChild(link);
+    output.hidden = false;
+    briefText.textContent = brief;
+    if (mailSlot) {
+      mailSlot.textContent = "";
+      if (CONTACT_EMAIL) {
+        var link = document.createElement("a");
+        var subject = encodeURIComponent("Reclaimed & Stained brief");
+        var body = encodeURIComponent(brief);
+        link.href = "mailto:" + CONTACT_EMAIL + "?subject=" + subject + "&body=" + body;
+        link.textContent = "Open a message";
+        mailSlot.appendChild(link);
+      }
     }
-    status.textContent = "The brief is shown below.";
-    output.focus();
-    output.select();
-    // Copy from the selection while the submit gesture is still active. The async clipboard call is denied in some browsers.
-    let copied = false;
-    try {
-      copied = document.execCommand("copy");
-    } catch (err) {
-      copied = false;
-    }
-    if (!copied) copied = await copyBrief(brief);
-    if (copied) {
-      output.setSelectionRange(output.value.length, output.value.length);
-      status.textContent = href
-        ? "The brief is copied and shown below. A mail link is under the brief."
-        : "The brief is copied and shown below.";
-      if (heading) heading.focus();
-    } else {
-      status.textContent = href
-        ? "The brief is shown below. Select it and copy it by hand. A mail link is under the brief."
-        : "The brief is shown below. Select it and copy it by hand.";
-      output.focus();
-      output.select();
-    }
-  });
-}
 
-(function () {
-  let navOk = false;
-  try {
-    navOk = initNav() === true;
-  } catch (err) {
-    console.error(err);
-    navOk = false;
+    copyText(brief).then(function (ok) {
+      if (ok) {
+        say("Copied. The brief is below. Nothing was sent.");
+      } else {
+        say("The brief is below. Select it and copy it. Nothing was sent.");
+      }
+    });
+    output.focus();
+  });
+
+  function say(message) {
+    if (status) status.textContent = message;
   }
-  try {
-    initForm();
-  } catch (err) {
-    console.error(err);
+
+  function copyText(value) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(value).then(
+        function () { return true; },
+        function () { return fallbackCopy(value); }
+      );
+    }
+    return Promise.resolve(fallbackCopy(value));
   }
-  if (navOk) window.__rsNav = true;
+
+  function fallbackCopy(value) {
+    var area = document.createElement("textarea");
+    area.value = value;
+    area.setAttribute("readonly", "");
+    area.style.position = "fixed";
+    area.style.top = "0";
+    area.style.left = "0";
+    area.style.width = "1px";
+    area.style.height = "1px";
+    area.style.opacity = "0";
+    document.body.appendChild(area);
+    area.focus();
+    area.select();
+    var ok = false;
+    try {
+      ok = document.execCommand("copy");
+    } catch (err) {
+      ok = false;
+    }
+    document.body.removeChild(area);
+    return ok;
+  }
 })();
